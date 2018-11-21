@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 
+{% load staticfiles %}
+
 <head>
     <meta charset="UTF-8">
     <meta name="renderer" content="webkit">
@@ -50,7 +52,7 @@
 
                         {% else %}
                           <!--认证不通过-->
-                        <a style="color:white" class="fr registerbtn" href="register.html">注册</a>
+                        <a style="color:white" class="fr registerbtn" href="{% url 'register' %}">注册</a>
                         <a style="color:white" class="fr loginbtn" href="/login/">登录</a>
 
 
