@@ -15,6 +15,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 import os
 import sys
 
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
@@ -51,7 +52,8 @@ INSTALLED_APPS = [
     'operation',
     'xadmin',
     'crispy_forms',
-    'captcha'
+    'captcha',
+    'pure_pagination',
 ]
 AUTH_USER_MODEL = "users.UserProfile"
 
@@ -81,6 +83,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.core.context_processors.media',
             ],
         },
     },
@@ -99,7 +102,6 @@ DATABASES = {
         'USER': 'root',
         'PASSWORD': '000000',
         'HOST': '127.0.0.1',
-
         'OPTIONS': {  # Todo  课程中并没有这部分
             "init_command": "SET foreign_key_checks = 0;",
         }
@@ -152,3 +154,6 @@ EMAIL_HOST_USER = "mxonline334@sina.com"
 EMAIL_HOST_PASSWORD = "123abc"
 EMAIL_USE_TLS= False
 EMAIL_FROM = "mxonline334@sina.com"
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
