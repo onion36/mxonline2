@@ -1,15 +1,16 @@
 #-*- coding:utf-8 -*-
-
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.backends import ModelBackend
 from django.db.models import Q
 from django.views.generic.base import View
 from django.contrib.auth.hashers import make_password
+from django.http import HttpResponse
 
-from .forms import LoginForm, RegisterForm, ForgetForm, ModifyPwdForm
+from .forms import LoginForm, RegisterForm, ForgetForm, ModifyPwdForm, UploadImageForm
 from .models import UserProfile, EmailVerifyRecord
 from utils.email_send import send_register_email
+from utils.mixin_utils import LoginRequiredMixin
 
 
 class CustomBacken(ModelBackend):
@@ -123,6 +124,33 @@ class ForgetPwdView(View):
             return render(request, "send_success.html")
         else:
             return render(request, "forgetpwd.html", {"forget_form": forget_form})
+
+
+class UserinfoView(LoginRequiredMixin, View):
+    """
+    用户个人信息
+    """
+
+    def get(self, request):
+        return render(request, 'usercenter-info.html', {
+
+        })
+
+
+class UploadImageView(LoginRequiredMixin, View):
+    """
+    用户修改头像
+    """
+    def post(self, request):
+        image_form = UploadImageForm(request.POST, request.FILES, instance=request.user)
+        if image_form.is_valid():
+            request.user.save()
+            return HttpResponse('{"status": "success"}', content_type='application/json')
+        else:
+            return HttpResponse('{"status": "fail"}', content_type='application/json')
+
+
+
 
 
 
